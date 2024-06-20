@@ -1,0 +1,74 @@
+﻿@model List<V_classementequipe>
+
+@{
+   
+    if (User.IsInRole("Equipe"))
+    {
+        Layout = "_Equipe";
+        ViewBag.Title = "Classement Général par Équipe ";
+
+
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "_Admin";
+        ViewBag.Title = "Classement Général par Équipe Pour toutes Categorie";
+
+    }
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+@if (User.IsInRole("Admin"))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Équipe</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var equipePoints in Model)
+            {
+                <tr>
+                    <td>@equipePoints.nomequipe </td>
+                    <td>@equipePoints.points</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-controller="Classement" asp-action="ClassementParGenre" asp-route-categorieId="1" asp-route-order="desc" asp-route-triColumn="points" class="btn btn-primary">Homme</a>
+    <a asp-controller="Classement" asp-action="ClassementParGenre" asp-route-categorieId="2" asp-route-order="desc" asp-route-triColumn="points" class="btn btn-primary">Femme</a>
+    <a asp-controller="Classement" asp-action="ClassementParGenre" asp-route-categorieId="3" asp-route-order="desc" asp-route-triColumn="points" class="btn btn-primary">Junior</a>
+
+}
+else if (User.IsInRole("Equipe"))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Équipe</th>
+                <th>Points</th>
+                <th>Rang</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var equipePoints in Model)
+            {
+                <tr>
+                    <td>@equipePoints.nomequipe </td>
+                    <td>@equipePoints.points</td>
+                    <td>@equipePoints.rang</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

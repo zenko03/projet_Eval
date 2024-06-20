@@ -1,0 +1,27 @@
+.accueil {
+    --bs-gutter-x: 30px;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+.card input[type="date"] {
+    width: 100%; /* Adjust width as needed */
+    padding: 8px; /* Adjust padding as needed */
+    border: 1px solid #ccc; /* Adjust border style as needed */
+    border-radius: 4px; /* Add border-radius for rounded corners */
+}
+
+.devisbtn {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+
+}
+.devisbtn input[type=submit]{
+    font-size:25px
+}

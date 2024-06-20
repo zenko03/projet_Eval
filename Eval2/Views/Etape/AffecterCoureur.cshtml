@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_Equipe";
+    ViewData["Title"] = "Affecter un Coureur";
+}
+
+<h1>@ViewData["Title"] pour l'étape @ViewBag.Etape.nom</h1>
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
+<div class="card">
+    <div class="card-body">
+        <form asp-controller="Etape" asp-action="SaveAffection" method="post">
+            <input type="hidden" name="EtapeId" value="@ViewBag.Etape.idetape" />
+
+            <div class="form-group">
+                <label for="CoureurId">Sélectionner un Coureur :</label>
+                <select class="form-control" id="CoureurId" name="CoureurId">
+                    <option value="">Sélectionner un coureur</option>
+                    @foreach (Coureurs coureur in ViewBag.Coureurs)
+                    {
+                        <option value="@coureur.idcoureur">@coureur.nom - N.@coureur.numdossard</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Affecter Coureur</button>
+        </form>
+    </div>
+</div>

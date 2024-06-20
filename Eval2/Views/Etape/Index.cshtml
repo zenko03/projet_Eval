@@ -1,0 +1,144 @@
+﻿@model Eval2.Models.Pagination.Modele<Eval2.Models.ViewModel.EtapeViewModel>
+
+@{
+    if (User.IsInRole("Equipe"))
+    {
+        Layout = "_Equipe";
+
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "_Admin";
+    }
+    ViewData["Title"] = "Liste des Étapes";
+}
+
+<h1>@ViewData["Title"]</h1>
+@if (User.IsInRole("Equipe"))
+{
+    
+    @foreach (var etapeViewModel in Model.Data)
+    {
+        <div class="etape">
+            <h2>@etapeViewModel.Etape.nom - @etapeViewModel.Coureurs.Count() coureurs</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Numéro</th>
+                        <th>Temps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var coureurEtape in etapeViewModel.Coureurs)
+                    {
+                        <tr>
+                            <td>@coureurEtape.Coureur.nom</td>
+                            <td>@coureurEtape.Coureur.numdossard</td>
+                            <td>@coureurEtape.ChronoTime?.ToString(@"hh\:mm\:ss")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <a class="btn btn-primary" href="@Url.Action("AffecterCoureur", "Etape", new { id = etapeViewModel.Etape.idetape })">Affecter Coureur</a>
+        </div>
+    }
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.CurrentPage - 1, pageSize = Model.PageSize })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize = Model.PageSize })">@i</a>
+                </li>
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = Model.CurrentPage + 1, pageSize = Model.PageSize })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}else if (User.IsInRole("Admin"))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Distance</th>
+                <th>Nombre de Coureurs</th>
+                <th>Rang de l'Étape</th>
+                <th>Date de Départ</th>
+                <th>Course</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var etapeViewModel in Model.Data)
+            {
+                <tr>
+                    <td>@etapeViewModel.Etape.nom</td>
+                    <td>@etapeViewModel.Etape.distance</td>
+                    <td>@etapeViewModel.Coureurs.Count()</td>
+                    <td>@etapeViewModel.Etape.rangetape</td>
+                    <td>@etapeViewModel.Etape.tempsdepart</td>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a class="btn btn-primary" href="@Url.Action("DetailEtapeAdmin", "Etape", new { id = etapeViewModel.Etape.idetape })">Details</a>
+                        </td>
+                    }
+                    else if (User.IsInRole("Equipe"))
+                    {
+
+                        <td>
+                            <a class="btn btn-primary" href="@Url.Action("AffecterCoureur", "Etape", new { id = etapeViewModel.Etape.idetape })">Affecter Coureur</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = i, pageSize = ViewBag.PageSize })">@i</a>
+                </li>
+            }
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+}

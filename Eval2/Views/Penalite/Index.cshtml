@@ -1,0 +1,48 @@
+﻿@* @model IEnumerable<Penalities>
+
+@{
+    ViewData["Title"] = "Pénalités";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "_Admin";
+    }
+}
+
+<h1>Pénalités</h1>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-@ViewBag.MessageType">
+        @ViewBag.Message
+    </div>
+}
+
+<p>
+    <form asp-controller="Penalite" asp-action="AddPena">
+        <input type="submit" value="Ajouter Pénalité" />
+    </form>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Équipe</th>
+            <th>Étape</th>
+            <th>Temps de pénalité</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var penalite in Model)
+        {
+            <tr>
+                <td>@penalite.equipe.nom</td>
+                <td>@penalite.etape.nom</td>
+                <td>@penalite.tempspenalite</td>
+                <td>
+                    @Html.ActionLink("Supprimer", "Delete", "Penalite", new { id = penalite.idpenality }, new { @onclick = "return confirm('Voulez-vous vraiment supprimer cette pénalité ?');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@

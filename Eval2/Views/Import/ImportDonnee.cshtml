@@ -1,0 +1,23 @@
+﻿@{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "_Admin";
+    }
+}
+<h3>Import Resultats et Etapes</h3>
+<form method="post" enctype="multipart/form-data" asp-controller="Import" asp-action="importer">
+    <div class="form-group">
+        <label for="fichier1">Sélectionner le premier fichier CSV :</label>
+        <input type="file" class="form-control-file" id="fichier1" name="fichier1" accept=".csv">
+    </div>
+    <div class="form-group">
+        <label for="fichier2">Sélectionner le deuxième fichier CSV :</label>
+        <input type="file" class="form-control-file" id="fichier2" name="fichier2" accept=".csv">
+    </div>
+    <input type="submit" class="btn btn-primary" value="Importer">
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}

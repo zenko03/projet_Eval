@@ -1,0 +1,61 @@
+﻿@{
+    if (User.IsInRole("Equipe"))
+    {
+        Layout = "_Equipe";
+
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "_Admin";
+    }
+    ViewData["Title"] = "Details de L' etape";
+
+
+}
+<h1>@ViewData["Title"]</h1>
+<h2>Étape: @Model.Etape.nom</h2>
+
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+<div class="card">
+    <div class="card-body">
+        <form asp-controller="Etape" asp-action="SaveTemps" method="post">
+            <input type="hidden" name="EtapeId" value="@Model.Etape.idetape" />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Équipe</th>
+                        <th>Coureur</th>
+                        <th>Temps</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ce in Model.CoureurEtapes)
+                    {
+                        var tempsArriver = Model.CoureurTempsArrive.ContainsKey(ce.idcoureur) ? Model.CoureurTempsArrive[ce.idcoureur]?.ToString("HH\\:mm\\:ss") : DateTime.Today.ToString("HH\\:mm\\:ss"); ;
+                        <tr>
+                            <td>@(ce.coureur?.equipe?.nom)</td>
+                            <td>@(ce.coureur?.nom)</td>
+                            <td>
+                                <input type="hidden" name="CoureurIds" value="@ce.idcoureur" />
+                                <input type="text" name="TempsArriver" value="@tempsArriver" class="form-control" />
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger" formaction="@Url.Action("DeleteTemps", "Etape", new { etapeId = Model.Etape.idetape, coureurId = ce.idcoureur })">Supprimer Temps</button>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+        </form>
+    </div>
+</div>

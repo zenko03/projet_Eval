@@ -1,0 +1,53 @@
+﻿@* @model Eval2.Models.Penalities
+
+@{
+    ViewData["Title"] = "Ajouter une Pénalité";
+    Layout = "_Admin";
+}
+
+<h1>Ajouter une Pénalité</h1>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-@ViewBag.MessageType">
+        @ViewBag.Message
+    </div>
+}
+
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="idequipe" class="control-label">Equipe</label>
+        <select asp-for="idequipe" class="form-control" asp-items="ViewBag.Equipes"></select>
+        <span asp-validation-for="idequipe" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="idetape" class="control-label">Etape</label>
+        <select asp-for="idetape" class="form-control" asp-items="ViewBag.Etapes"></select>
+        <span asp-validation-for="idetape" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="tempspenalite" class="control-label">Temps de Pénalité (hh:mm:ss)</label>
+        <input type="text" asp-for="tempspenalite" class="form-control" />
+        <span asp-validation-for="tempspenalite" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="motif" class="control-label">Motif</label>
+        <input asp-for="motif" class="form-control" />
+        <span asp-validation-for="motif" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="datepenalite" class="control-label">Date de Pénalité</label>
+        <input asp-for="datepenalite" class="form-control" />
+        <span asp-validation-for="datepenalite" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Ajouter" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+ *@

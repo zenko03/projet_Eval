@@ -1,0 +1,43 @@
+﻿@using Eval2.Models
+
+@{
+    ViewBag.Title = "Classement Général par Équipe - " + ViewBag.Genre;
+    if (User.IsInRole("Equipe"))
+    {
+        Layout = "_Equipe";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "_Admin";
+    }
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Equipe</th>
+            <th>Rang</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var classement in Model)
+        {
+            <tr>
+                <td>@classement.NomEquipe</td>
+                <td>@classement.Rang</td>
+                <td>@classement.Points</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

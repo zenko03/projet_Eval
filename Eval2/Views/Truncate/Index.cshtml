@@ -1,0 +1,51 @@
+﻿@model List<string>
+@{
+    ViewData["Title"] = "Database Cleaner";
+}
+
+<h1>Database Cleaner</h1>
+
+<button id="clearAllButton" class="btn btn-danger">Supprimer toutes les données</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Table</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var table in Model)
+        {
+            <tr>
+                <td>@table</td>
+                <td>
+                    <form method="post" asp-action="ClearTable">
+                        <input type="hidden" name="tableName" value="@table" />
+                        <button type="submit" class="btn btn-danger">Nettoyer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        document.getElementById("clearAllButton").addEventListener("click", function () {
+            if (confirm("Êtes-vous sûr de vouloir supprimer toutes les données ?")) {
+                fetch('@Url.Action("ClearAllTables")', {
+                    method: 'POST'
+                }).then(() => window.location.reload());
+            }
+        });
+
+        document.querySelectorAll("form").forEach(form => {
+            form.addEventListener("submit", function (event) {
+                if (!confirm("Êtes-vous sûr de vouloir nettoyer cette table ?")) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+}

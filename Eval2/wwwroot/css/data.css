@@ -1,0 +1,79 @@
+/* Style de base pour la table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+    /* Style pour les en-têtes de colonne */
+    table th {
+        background-color: #009879;
+        color: white;
+        padding: 12px 15px;
+    }
+
+    /* Style pour les cellules */
+    table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    /* Alternance des couleurs de fond pour les rangées */
+    table tr:nth-child(even) {
+        background-color: #f3f3f3;
+    }
+
+    table tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    /* Style pour la rangée survolée */
+    table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+/* Style pour les bordures */
+table, th, td {
+    border: 1px solid #dddddd;
+}
+
+    /* Style pour les cellules actives */
+    table tr:active {
+        background-color: #e9e9e9;
+    }
+
+/* Style pour une meilleure lisibilité sur les écrans mobiles */
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+
+        table thead {
+            display: none;
+        }
+
+        table tr {
+            display: block;
+            margin-bottom: .625em;
+        }
+
+        table td {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            border-bottom: 1px solid #dddddd;
+        }
+
+            table td::before {
+                content: attr(data-label);
+                float: left;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+}

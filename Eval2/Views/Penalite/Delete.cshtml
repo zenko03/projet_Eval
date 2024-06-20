@@ -1,0 +1,42 @@
+﻿@* @model Penalities
+
+@{
+    ViewData["Title"] = "Supprimer une Pénalité";
+    Layout = "_Admin";
+}
+
+<h1>Supprimer une Pénalité</h1>
+
+<h3>Voulez-vous vraiment supprimer cette pénalité?</h3>
+<div>
+    <h4>Penalities</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Équipe
+        </dt>
+        <dd class="col-sm-10">
+            @Model.equipe.nom
+        </dd>
+        <dt class="col-sm-2">
+            Étape
+        </dt>
+        <dd class="col-sm-10">
+            @Model.etape.nom
+        </dd>
+        <dt class="col-sm-2">
+            Temps de pénalité
+        </dt>
+        <dd class="col-sm-10">
+            @Model.tempspenalite
+        </dd>
+       
+    </dl>
+
+    <form asp-action="DeleteConfirmed" asp-controller="Penalite">
+        <input type="hidden" asp-for="idpenality" />
+        <input type="submit" value="Supprimer" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+ *@

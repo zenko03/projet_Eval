@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "_Admin";
+}
+
+@{
+    ViewBag.Title = "Liste des Coureurs";
+}
+@model IEnumerable<Eval2.Models.Coureurs>
+
+
+<h2>Liste des Coureurs</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+<a href="@Url.Action("GenererCategories", "Categorie")" class="btn btn-primary">Générer Catégories</a>
+<form method="post" action="@Url.Action("ReinitialiserCategories", "Categorie")" style="display:inline;">
+    <button type="submit" class="btn btn-danger">Réinitialiser Catégories</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Numéro</th>
+            <th>Genre</th>
+            <th>Date de Naissance</th>
+            <th>Équipe</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var coureur in Model)
+        {
+            <tr>
+                <td>@coureur.nom</td>
+                <td>@coureur.numdossard</td>
+                <td>@coureur.genre</td>
+                <td>@coureur.ddn.ToShortDateString()</td>
+                <td>@coureur.equipe.nom</td>
+            </tr>
+        }
+    </tbody>
+</table>

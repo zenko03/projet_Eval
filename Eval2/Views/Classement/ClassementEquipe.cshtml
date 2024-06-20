@@ -1,0 +1,34 @@
+﻿@using Eval2.Models.ViewModel;
+
+@{
+    if (User.IsInRole("Equipe"))
+    {
+        Layout = "_Equipe";
+
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "_Admin";
+    }
+}
+@model List<ClassementEquipeViewModel>
+
+<h2>Classement Général par Équipe</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Équipe</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NomEquipe</td>
+                <td>@item.TotalPoints</td>
+            </tr>
+        }
+    </tbody>
+</table>
